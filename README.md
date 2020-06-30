@@ -6,11 +6,6 @@ Journal application to record your life through the terminal
 
 ## Clone this repository
 
-On Linux:
-```
-git clone https://github.com/WadsonPontes/diary.git
-```
-On Windows:
 ```
 git clone https://github.com/WadsonPontes/diary.git
 ```
