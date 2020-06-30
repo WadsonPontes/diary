@@ -1,10 +1,10 @@
-## Diary
+# Diary
 
 Journal application to record your life through the terminal
 
-## Running the app
+# Running the app
 
-# Clone this repository
+## Clone this repository
 
 On Linux:
 ```
@@ -15,13 +15,13 @@ On Windows
 git clone https://github.com/WadsonPontes/diary.git
 ```
 
-# Navigate into the project directory
+## Navigate into the project directory
 
 ```
 cd diary
 ```
 
-# Compile the app
+## Compile the app
 
 On Linux:
 ```
@@ -32,7 +32,7 @@ On Windows
 script.bat
 ```
 
-# Run the app
+## Run the app
 
 On Linux:
 ```
@@ -43,20 +43,20 @@ On Windows
 build/Diary.exe <command>
 ```
 
-## Features
+# Features
 
-# Add
+## Add
 
 You can add messages to the diary. To do this, run the application like this `build/Diary.exe add` and enter your message when prompted
 
-# Search
+## Search
 
 You may search diary entries. To do this, run the application like this `build/Diary.exe search` and enter your search when prompted
 
-# List
+## List
 
 You can list all your messages in the diary. run the application like this `build/Diary.exe list`
 
-## Author
+# Author
 
 - Wadson Pontes - [@WadsonPontes](https://github.com/WadsonPontes)
