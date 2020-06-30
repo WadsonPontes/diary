@@ -10,7 +10,7 @@ On Linux:
 ```
 git clone https://github.com/WadsonPontes/diary.git
 ```
-On Windows
+On Windows:
 ```
 git clone https://github.com/WadsonPontes/diary.git
 ```
@@ -27,7 +27,7 @@ On Linux:
 ```
 make
 ```
-On Windows
+On Windows:
 ```
 script.bat
 ```
@@ -38,7 +38,7 @@ On Linux:
 ```
 build/Diary <command>
 ```
-On Windows
+On Windows:
 ```
 build/Diary.exe <command>
 ```
