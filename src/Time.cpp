@@ -14,32 +14,32 @@ void Time::set_from_string(const std::string& time) {
 	std::stringstream stream(time);
 	char discard;
 
-	stream >> hour;
+	stream >> this->hour;
 	stream >> discard;
-	stream >> minute;
+	stream >> this->minute;
 	stream >> discard;
-	stream >> second;
+	stream >> this->second;
 }
 
 std::string Time::to_string() {
 	std::stringstream stream;
 
-	if (hour < 10)
+	if (this->hour < 10)
 		stream << "0";
 
-	stream << hour;
+	stream << this->hour;
 	stream << ":";
 
-	if (minute < 10)
+	if (this->minute < 10)
 		stream << "0";
 
-	stream << minute;
+	stream << this->minute;
 	stream << ":";
 
-	if (second < 10)
+	if (this->second < 10)
 		stream << "0";
 
-	stream << second;
+	stream << this->second;
 
 	return stream.str();
 }

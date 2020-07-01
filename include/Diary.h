@@ -4,20 +4,18 @@
 #include "Message.h"
 
 #include <string>
+#include <vector>
 
 struct Diary {
-	Diary(const std::string& _filename);
+	Diary(const std::string& filename);
 	~Diary();
 
 	std::string filename;
-	Message* messages;
-	size_t messages_size;
-	size_t messages_capacity;
+	std::vector<Message*> messages;
 
 	void load();
-	void add(const std::string& message);
-	Message* search(std::string what);
-	void resize_messages();
+	void add(const std::string& content);
+	std::vector<Message*> search(std::string what);
 	void write();
 };
 

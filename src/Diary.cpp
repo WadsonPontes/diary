@@ -7,85 +7,63 @@
 #include <sstream>
 #include <fstream>
 
-Diary::Diary(const std::string& _filename):
-filename(_filename),
-messages(nullptr),
-messages_size(0),
-messages_capacity(1)
+Diary::Diary(const std::string& filename):
+filename(filename)
 {
-	messages = new Message[messages_capacity];
-	load();
+	this->load();
 }
 
 Diary::~Diary() {
-	write();
-	delete[] messages;
+	this->write();
 }
 
 void Diary::load() {
-	std::ifstream file = open_file_for_reading(filename);
+	std::ifstream file = open_file_for_reading(this->filename);
 	std::string type;
-	std::string _date;
-	std::string _message;
+	std::string date;
+	std::string content;
 	
 	while (file >> type) {
 		if (type == "#") {
-			getline(file, _date);
+			getline(file, date);
 		}
 		else if (type == "-") {
-			if (messages_size >= messages_capacity)
-				resize_messages();
+			getline(file, content);
 
-			getline(file, _message);
-			messages[messages_size].set(_date, _message);
-			messages_size++;
+			Message *message = new Message(date, content);
+
+			this->messages.push_back(message);
 		}
 	}
 
 	file.close();
 }
 
-void Diary::add(const std::string& message) {
-	if (messages_size >= messages_capacity)
-		resize_messages();
+void Diary::add(const std::string& content) {
+	Message *message = new Message(get_current_date(), get_current_time(), content);
 
-	messages[messages_size].content = message;
-	messages[messages_size].date.set_from_string(get_current_date());
-	messages[messages_size].time.set_from_string(get_current_time());
-	messages_size++;
+	this->messages.push_back(message);
 }
 
-Message* Diary::search(std::string what) {
-	for (size_t i = 0; i < messages_size; ++i) {
-		if (messages[i].content.find(what) != std::string::npos) {
-			return &messages[i];
+std::vector<Message*> Diary::search(std::string what) {
+	std::vector<Message*> result;
+
+	for (auto it : this->messages) {
+		if (it->content.find(what) != std::string::npos) {
+			result.push_back(it);
 		}
 	}
 
-	return nullptr;
-}
-
-void Diary::resize_messages() {
-	messages_capacity *= 2;
-	Message *new_messages = new Message[messages_capacity];
-
-	for (size_t i = 0; i < messages_size; ++i) {
-		new_messages[i].content = messages[i].content;
-		new_messages[i].date.set_from_string(messages[i].date.to_string());
-		new_messages[i].time.set_from_string(messages[i].time.to_string());
-	}
-
-	delete[] messages;
-	messages = new_messages;
+	return result;
 }
 
 void Diary::write() {
-	std::ofstream file = open_file_for_writing(filename);
+	std::ofstream file = open_file_for_writing(this->filename);
 	std::string current_date = "";
 
-	for (size_t i = 0; i < messages_size; ++i) {
-		if (messages[i].date.to_string() != current_date) {
-			current_date = messages[i].date.to_string();
+	for (auto it : this->messages) {
+		if (it->date.to_string() != current_date) {
+			current_date = it->date.to_string();
 			file << std::endl;
 			file << "# ";
 			file << current_date;
@@ -93,9 +71,9 @@ void Diary::write() {
 		}
 
 		file << "- ";
-		file << messages[i].time.to_string();
+		file << it->time.to_string();
 		file << " ";
-		file << messages[i].content;
+		file << it->content;
 		file << std::endl;
 	}
 	

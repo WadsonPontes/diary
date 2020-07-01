@@ -2,18 +2,24 @@
 
 #include <sstream>
 
-void Message::set(const std::string& _date, const std::string& _message) {
-	std::stringstream stream(_message);
-	std::string _time;
+Message::Message(const std::string& date, const std::string& content) {
+	std::stringstream stream(content);
+	std::string time;
 	char discard;
 
-	date.set_from_string(_date);
+	this->date.set_from_string(date);
 
-	stream >> _time;
-	time.set_from_string(_time);
+	stream >> time;
+	this->time.set_from_string(time);
 
 	stream >> std::noskipws >> discard;
-	std::getline(stream, content);
+	std::getline(stream, this->content);
+}
+
+Message::Message(const std::string& date, const std::string& time, const std::string& content) {
+	this->date.set_from_string(date);
+	this->time.set_from_string(time);
+	this->content = content;
 }
 
 void Message::set_from_string(const std::string& message) {
@@ -22,15 +28,20 @@ void Message::set_from_string(const std::string& message) {
 	char discard;
 
 	stream >> temp;
-	date.set_from_string(temp);
+	this->date.set_from_string(temp);
 
 	stream >> temp;
-	time.set_from_string(temp);
+	this->time.set_from_string(temp);
 
 	stream >> std::noskipws >> discard;
-	std::getline(stream, content);
+	std::getline(stream, this->content);
 }
 
 std::string Message::to_string() {
-	return "[" + date.to_string() + " " + time.to_string() + "] " + content;
+	return "[" +
+	       this->date.to_string() +
+	       " " +
+	       this->time.to_string() +
+	       "] " +
+	       this->content;
 }

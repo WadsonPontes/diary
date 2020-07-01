@@ -14,28 +14,28 @@ void Date::set_from_string(const std::string& date) {
 	std::stringstream stream(date);
 	char discard;
 
-	stream >> day;
+	stream >> this->day;
 	stream >> discard;
-	stream >> month;
+	stream >> this->month;
 	stream >> discard;
-	stream >> year;
+	stream >> this->year;
 }
 
 std::string Date::to_string() {
 	std::stringstream stream;
 
-	if (day < 10)
+	if (this->day < 10)
 		stream << "0";
 
-	stream << day;
+	stream << this->day;
 	stream << "/";
 
-	if (month < 10)
+	if (this->month < 10)
 		stream << "0";
 
-	stream << month;
+	stream << this->month;
 	stream << "/";
-	stream << year;
+	stream << this->year;
 
 	return stream.str();
 }

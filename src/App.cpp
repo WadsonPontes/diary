@@ -1,6 +1,7 @@
 #include "App.h"
 
 #include <iostream>
+#include <vector>
 
 App::App(const std::string& filename) : diary(filename) {
 
@@ -8,27 +9,27 @@ App::App(const std::string& filename) : diary(filename) {
 
 int App::run(int argc, char* argv[]) {
 	if (argc == 1)
-		return show_usage(argv[0]);
+		return this->show_usage(argv[0]);
 
 	std::string action = argv[1];
 
 	if (action == "add") {
 		if (argc == 2)
-			add();
+			this->add();
 		else
-			add(argv[2]);
+			this->add(argv[2]);
 	}
 	else if (action == "search") {
 		if (argc == 2)
-			search();
+			this->search();
 		else
-			search(argv[2]);
+			this->search(argv[2]);
 	}
 	else if (action == "list") {
-		list_messages();
+		this->list_messages();
 	}
 	else {
-		return show_usage(argv[0]);
+		return this->show_usage(argv[0]);
 	}
 
 	return 0;
@@ -39,12 +40,12 @@ void App::add() {
 	std::cout << "Enter your message: ";
 	std::getline(std::cin, message);
 
-	add(message);
+	this->add(message);
 }
 
 void App::add(const std::string message) {
-	diary.add(message);
-	diary.write();
+	this->diary.add(message);
+	this->diary.write();
 }
 
 void App::search() {
@@ -52,21 +53,29 @@ void App::search() {
 	std::cout << "Enter your search: ";
 	std::getline(std::cin, message);
 
-	search(message);
+	this->search(message);
 }
 
 void App::search(const std::string message) {
-	Message* result = diary.search(message);
+	std::vector<Message*> result = this->diary.search(message);
 
-	if (result == nullptr)
+	if (result.empty())
 		std::cout << "No results found" << std::endl;
-	else
-		std::cout << result->to_string() << std::endl;
+	else {
+		for (auto it : result) {
+			std::cout << it->to_string() << std::endl;
+		}
+	}
 }
 
 void App::list_messages() {
-	for (size_t i = 0; i < diary.messages_size; ++i) {
-		std::cout << diary.messages[i].to_string() << std::endl;
+	if (this->diary.messages.empty()) {
+		std::cout << "No messages found" << std::endl;
+	}
+	else {
+		for (auto it : this->diary.messages) {
+			std::cout << it->to_string() << std::endl;
+		}
 	}
 }
 
