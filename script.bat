@@ -2,7 +2,11 @@ set CC = g++
 set CFLAGS = -std=c++11 -Iinclude -Wall -O2
 set PROG = Diary.exe
 
+del *.o
 del src\*.o
+del build/Diary
+del build/Diary.exe
+
 start %CC% %FLAG% -o src\Date.o -c src\Date.cpp
 start %CC% %FLAG% -o src\Time.o -c src\Time.cpp
 start %CC% %FLAG% -o src\Message.o -c src\Message.cpp

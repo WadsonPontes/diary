@@ -2,14 +2,17 @@ CC = g++
 CFLAGS = -std=c++11 -Iinclude -Wall -O2
 PROG = Diary
 
-$(PROG): clear main.o App.o Diary.o Message.o Date.o Time.o Util.o
+$(PROG): clean main.o App.o Diary.o Message.o Date.o Time.o Util.o
 	$(CC) $(CFLAGS) -o build/Diary *.o
 
-test: clear test.o App.o Diary.o Message.o Date.o Time.o Util.o
+test: clean test.o App.o Diary.o Message.o Date.o Time.o Util.o
 	$(CC) $(CFLAGS) -o build/Test *.o
 
-clear:
+clean:
+	rm -f src/*.o
 	rm -f *.o
+	rm -f build/Diary
+	rm -f build/Diary.exe
 
 main.o: src/main.cpp
 	$(CC) $(CFLAGS) -c src/main.cpp
