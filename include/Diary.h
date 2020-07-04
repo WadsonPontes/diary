@@ -7,7 +7,6 @@
 #include <vector>
 
 struct Diary {
-	Diary(const std::string& filename);
 	~Diary();
 
 	std::string filename;

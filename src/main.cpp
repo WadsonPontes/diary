@@ -1,7 +1,7 @@
 #include "App.h"
 
 int main(int argc, char* argv[]) {
-	App application("diary.md");
+	App application;
 
 	return application.run(argc, argv);
 }

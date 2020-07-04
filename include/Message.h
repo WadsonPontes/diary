@@ -15,7 +15,7 @@ struct Message {
 	Time time;
 
 	void set_from_string(const std::string& message);
-	std::string to_string();
+	std::string to_string(std::string format);
 };
 
 #endif

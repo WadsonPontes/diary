@@ -1,5 +1,7 @@
 #include "Message.h"
 
+#include "Util.h"
+
 #include <sstream>
 
 Message::Message(const std::string& date, const std::string& content) {
@@ -37,11 +39,12 @@ void Message::set_from_string(const std::string& message) {
 	std::getline(stream, this->content);
 }
 
-std::string Message::to_string() {
-	return "[" +
-	       this->date.to_string() +
-	       " " +
-	       this->time.to_string() +
-	       "] " +
-	       this->content;
+std::string Message::to_string(std::string format) {
+	std::string message = format;
+
+	replace_all(message, "%d", this->date.to_string());
+	replace_all(message, "%t", this->time.to_string());
+	replace_all(message, "%m", this->content);
+
+	return message;
 }

@@ -7,12 +7,6 @@
 #include <sstream>
 #include <fstream>
 
-Diary::Diary(const std::string& filename):
-filename(filename)
-{
-	this->load();
-}
-
 Diary::~Diary() {
 	this->write();
 }

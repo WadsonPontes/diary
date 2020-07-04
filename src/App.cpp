@@ -1,10 +1,15 @@
 #include "App.h"
 
+#include "Util.h"
+
 #include <iostream>
 #include <vector>
+#include <sstream>
 
-App::App(const std::string& filename) : diary(filename) {
-
+App::App() {
+	config.load();
+	diary.filename = config.path;
+	diary.load();
 }
 
 int App::run(int argc, char* argv[]) {
@@ -26,7 +31,13 @@ int App::run(int argc, char* argv[]) {
 			this->search(argv[2]);
 	}
 	else if (action == "list") {
-		this->list_messages();
+		if (argc == 2)
+			this->list_messages();
+		else
+			this->list_messages(argv[2]);
+	}
+	else if (action == "interactive") {
+		this->interactive();
 	}
 	else {
 		return this->show_usage(argv[0]);
@@ -63,20 +74,58 @@ void App::search(const std::string message) {
 		std::cout << "No results found" << std::endl;
 	else {
 		for (auto it : result) {
-			std::cout << it->to_string() << std::endl;
+			std::cout << it->to_string(this->config.default_format) << std::endl;
 		}
 	}
 }
 
 void App::list_messages() {
+	this->list_messages(this->config.default_format);
+}
+
+void App::list_messages(const std::string format) {
 	if (this->diary.messages.empty()) {
 		std::cout << "No messages found" << std::endl;
 	}
 	else {
 		for (auto it : this->diary.messages) {
-			std::cout << it->to_string() << std::endl;
+			std::cout << it->to_string(format) << std::endl;
 		}
 	}
+}
+
+void App::interactive() {
+	std::string action;
+
+	do {
+		limparTela();
+		std::cout << "Diário 1.0" << std::endl << std::endl;
+
+		std::cout << "Selecione uma ação:" << std::endl << std::endl;
+
+		std::cout << "1) Listar mensagens" << std::endl;
+		std::cout << "2) Adicionar nova mensagem" << std::endl;
+		std::cout << "3) Pesquisar" << std::endl << std::endl;
+
+		std::cout << "0) Finalizar" << std::endl;
+
+		std::cout << ">";
+
+		getline(std::cin, action);
+
+		if (action == "1")
+			this->list_messages();
+		else if (action == "2")
+			this->add();
+		else if (action == "3")
+			this->search();
+		else if (action != "0")
+			std::cout << "Digite um comando valido" << std::endl;
+
+		if (action != "0" && action != "2")
+			getchar();
+
+	} while (action != "0");
 }
 
 int App::show_usage(const std::string codename) {

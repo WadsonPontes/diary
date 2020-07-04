@@ -49,3 +49,16 @@ void check_file_for_error(bool error) {
 		exit(1);
 	}
 }
+
+void replace_all(std::string& str, const std::string& from, const std::string& to) {
+	size_t start_pos = str.find(from);
+
+	while (start_pos != std::string::npos) {
+		str.replace(start_pos, from.length(), to);
+		start_pos = str.find(from);
+	}
+}
+
+int limparTela() {
+	return system(LIMPAR_TELA);
+}
