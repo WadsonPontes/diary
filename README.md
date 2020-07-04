@@ -1,6 +1,6 @@
 ## Diary
 
-Simple diary app to record your life through the terminal. Currently the application contains the following features: add, search and list.
+Simple diary app to record your life through the terminal. Currently the application contains the following features: add, search, list e interactive.
 
 ## Running the app
 
@@ -34,6 +34,7 @@ build/Diary.exe <command>
 - **add** - You can add messages to the diary. To do this, run the application like this `build/Diary.exe add` and enter your message when prompted
 - **search** - You may search diary entries. To do this, run the application like this `build/Diary.exe search` and enter your search when prompted
 - **list** - You can list all your messages in the diary. run the application like this `build/Diary.exe list`
+- **interactive** - You can choose what to do in an interactive menu that remains open until your order is complete
 
 ## Author
 
