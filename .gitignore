@@ -2,3 +2,4 @@ Diary
 *.o
 *.exe
 diary.md
+diary.config
