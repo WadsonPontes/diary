@@ -6,16 +6,17 @@
 
 #include <string>
 
-struct Message {
-	Message(const std::string& date, const std::string& content);
-	Message(const std::string& date, const std::string& time, const std::string& content);
+class Message {
+	public:
+		std::string content;
+		Date date;
+		Time time;
 
-	std::string content;
-	Date date;
-	Time time;
+		Message(const std::string& date, const std::string& content);
+		Message(const std::string& date, const std::string& time, const std::string& content);
 
-	void set_from_string(const std::string& message);
-	std::string to_string(std::string format);
+		void set_from_string(const std::string& message);
+		std::string to_string(std::string format);
 };
 
 #endif

@@ -3,15 +3,16 @@
 
 #include <string>
 
-struct Date {
-	Date();
+class Date {
+	public:
+		unsigned day;
+		unsigned month;
+		unsigned year;
 
-	unsigned day;
-	unsigned month;
-	unsigned year;
+		Date();
 
-	void set_from_string(const std::string& date);
-	std::string to_string();
+		void set_from_string(const std::string& date);
+		std::string to_string();
 };
 
 #endif

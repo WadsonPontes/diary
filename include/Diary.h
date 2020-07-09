@@ -6,16 +6,17 @@
 #include <string>
 #include <vector>
 
-struct Diary {
-	~Diary();
+class Diary {
+	public:
+		std::string filename;
+		std::vector<Message*> messages;
 
-	std::string filename;
-	std::vector<Message*> messages;
+		~Diary();
 
-	void load();
-	void add(const std::string& content);
-	std::vector<Message*> search(std::string what);
-	void write();
+		void load();
+		void add(const std::string& content);
+		std::vector<Message*> search(std::string what);
+		void write();
 };
 
 #endif
