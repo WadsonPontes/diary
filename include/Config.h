@@ -10,7 +10,8 @@ class Config {
 		std::string path;
 		std::string default_format;
 
-		void load();
+		Config();
+		void create();
 };
 
 #endif

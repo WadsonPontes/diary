@@ -21,7 +21,7 @@ class App {
 		void search(const std::string message);
 		void list_messages();
 		void list_messages(const std::string format);
-		void interactive();
+		int interactive();
 		int show_usage(const std::string codename);
 };
 

@@ -7,14 +7,13 @@
 #include <sstream>
 
 App::App() {
-	config.load();
-	diary.filename = config.path;
-	diary.load();
+	this->diary.filename = this->config.path;
+	this->diary.load();
 }
 
 int App::run(int argc, char* argv[]) {
 	if (argc == 1)
-		return this->show_usage(argv[0]);
+		return this->interactive();
 
 	std::string action = argv[1];
 
@@ -37,7 +36,7 @@ int App::run(int argc, char* argv[]) {
 			this->list_messages(argv[2]);
 	}
 	else if (action == "interactive") {
-		this->interactive();
+		return this->interactive();
 	}
 	else {
 		return this->show_usage(argv[0]);
@@ -94,7 +93,7 @@ void App::list_messages(const std::string format) {
 	}
 }
 
-void App::interactive() {
+int App::interactive() {
 	std::string action;
 
 	do {
@@ -126,6 +125,8 @@ void App::interactive() {
 			getchar();
 
 	} while (action != "0");
+
+	return 0;
 }
 
 int App::show_usage(const std::string codename) {

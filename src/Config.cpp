@@ -6,18 +6,11 @@
 #include <sstream>
 #include <fstream>
 
-void Config::load() {
+Config::Config() {
 	this->file.open("diary.config");
 
-	if (!this->file) {
-		std::ofstream create("diary.config", std::ios::app);
-		check_file_for_error(!create);
-
-		create << "path=diary.md" << std::endl;
-		create << "default_format=%d %t: %m" << std::endl;
-
-		create.close();
-	}
+	if (!this->file)
+		this->create();
 
 	this->file.close();
 
@@ -31,4 +24,14 @@ void Config::load() {
 	this->default_format.erase(0, 15);
 
 	this->file.close();
+}
+
+void Config::create() {
+	std::ofstream file("diary.config", std::ios::app);
+	check_file_for_error(!file);
+
+	file << "path=diary.md" << std::endl;
+	file << "default_format=[%d %t] %m" << std::endl;
+
+	file.close();
 }
