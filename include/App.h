@@ -19,6 +19,7 @@ class App {
 		void add(const std::string message);
 		void search();
 		void search(const std::string message);
+		void search(const std::string message, const std::string format);
 		void list_messages();
 		void list_messages(const std::string format);
 		int interactive();

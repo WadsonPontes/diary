@@ -26,8 +26,10 @@ int App::run(int argc, char* argv[]) {
 	else if (action == "search") {
 		if (argc == 2)
 			this->search();
-		else
+		else if (argc == 3)
 			this->search(argv[2]);
+		else
+			this->search(argv[2], argv[3]);
 	}
 	else if (action == "list") {
 		if (argc == 2)
@@ -47,7 +49,7 @@ int App::run(int argc, char* argv[]) {
 
 void App::add() {
 	std::string message;
-	std::cout << "Enter your message: ";
+
 	std::getline(std::cin, message);
 
 	this->add(message);
@@ -60,20 +62,27 @@ void App::add(const std::string message) {
 
 void App::search() {
 	std::string message;
-	std::cout << "Enter your search: ";
+
 	std::getline(std::cin, message);
 
-	this->search(message);
+	this->search(message, this->config.default_format);
 }
 
 void App::search(const std::string message) {
+	this->search(message, this->config.default_format);
+}
+
+void App::search(const std::string message, const std::string format) {
 	std::vector<Message*> result = this->diary.search(message);
 
+	limparTela();
+	std::cout << "[RESULT FOR][" << message << "]" << std::endl << std::endl;
+
 	if (result.empty())
-		std::cout << "No results found" << std::endl;
+		std::cout << "No results found..." << std::endl;
 	else {
 		for (auto it : result) {
-			std::cout << it->to_string(this->config.default_format) << std::endl;
+			std::cout << it->to_string(format) << std::endl;
 		}
 	}
 }
@@ -84,7 +93,7 @@ void App::list_messages() {
 
 void App::list_messages(const std::string format) {
 	if (this->diary.messages.empty()) {
-		std::cout << "No messages found" << std::endl;
+		std::cout << "No messages found..." << std::endl;
 	}
 	else {
 		for (auto it : this->diary.messages) {
@@ -98,46 +107,71 @@ int App::interactive() {
 
 	do {
 		limparTela();
-		std::cout << "Diário 1.0" << std::endl << std::endl;
 
-		std::cout << "Selecione uma ação:" << std::endl << std::endl;
+		std::cout << "[SELECT AN ACTION]" << std::endl << std::endl;
 
-		std::cout << "1) Listar mensagens" << std::endl;
-		std::cout << "2) Adicionar nova mensagem" << std::endl;
-		std::cout << "3) Pesquisar" << std::endl << std::endl;
+		std::cout << "[Enter 1] LIST" << std::endl;
+		std::cout << "[Enter 2] ADD" << std::endl;
+		std::cout << "[Enter 3] SEARCH" << std::endl;
+		std::cout << "[Enter 0] EXIT" << std::endl << std::endl;
 
-		std::cout << "0) Finalizar" << std::endl;
-
-		std::cout << ">";
+		std::cout << "[ACTION]";
 
 		getline(std::cin, action);
 
-		if (action == "1")
-			this->list_messages();
-		else if (action == "2")
-			this->add();
-		else if (action == "3")
-			this->search();
-		else if (action != "0")
-			std::cout << "Digite um comando valido" << std::endl;
+		if (action == "1") {
+			limparTela();
+			std::cout << "[ALL MESSAGES]" << std::endl << std::endl;
 
-		if (action != "0" && action != "2")
+			this->list_messages();
+
+			std::cout << std::endl << "[BACK]";
 			getchar();
+		}
+		else if (action == "2") {
+			limparTela();
+			std::cout << "[ENTER YOUR MESSAGE]" << std::endl << std::endl;
+
+			std::cout << std::endl << "[MESSAGE]";
+
+			this->add();
+		}
+		else if (action == "3") {
+			limparTela();
+			std::cout << "[ENTER YOUR SEARCH]" << std::endl << std::endl;
+
+			std::cout << std::endl << "[SEARCH]";
+
+			this->search();
+
+			std::cout << std::endl << "[BACK]";
+			getchar();
+		}
+		else if (action != "0") {
+			limparTela();
+			std::cout << "[INVALID ACTION]" << std::endl << std::endl;
+
+			std::cout << std::endl << "[BACK]";
+			getchar();
+		}
 
 	} while (action != "0");
+
+	limparTela();
 
 	return 0;
 }
 
 int App::show_usage(const std::string codename) {
-	std::cout << "Use: " << codename << " add" << std::endl;
-	std::cout << "Or" << std::endl;
-	std::cout << "Use: " << codename << " add <message>" << std::endl;
-	std::cout << "Or" << std::endl;
-	std::cout << "Use: " << codename << " search" << std::endl;
-	std::cout << "Or" << std::endl;
-	std::cout << "Use: " << codename << " search <message>" << std::endl;
-	std::cout << "Or" << std::endl;
-	std::cout << "Use: " << codename << " list" << std::endl;
+	std::cout << "Possible commands:" << std::endl;
+	std::cout << codename << std::endl;
+	std::cout << codename << " add" << std::endl;
+	std::cout << codename << " add <message>" << std::endl;
+	std::cout << codename << " search" << std::endl;
+	std::cout << codename << " search <message>" << std::endl;
+	std::cout << codename << " search <message> <format>" << std::endl;
+	std::cout << codename << " list" << std::endl;
+	std::cout << codename << " list <format>" << std::endl;
+	std::cout << codename << " interactive" << std::endl;
 	return 0;
 }
