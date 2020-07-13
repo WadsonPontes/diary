@@ -163,7 +163,7 @@ int App::interactive() {
 }
 
 int App::show_usage(const std::string codename) {
-	std::cout << "Possible commands:" << std::endl;
+	std::cout << "[Possible commands]" << std::endl << std::endl;
 	std::cout << codename << std::endl;
 	std::cout << codename << " add" << std::endl;
 	std::cout << codename << " add <message>" << std::endl;
