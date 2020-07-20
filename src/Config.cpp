@@ -6,15 +6,17 @@
 #include <sstream>
 #include <fstream>
 
+#define PATH "diary.config"
+
 Config::Config() {
-	this->file.open("diary.config");
+	this->file.open(PATH);
 
 	if (!this->file)
 		this->create();
 
 	this->file.close();
 
-	this->file.open("diary.config");
+	this->file.open(PATH);
 	check_file_for_error(!this->file);
 
 	getline(file, this->path);
@@ -27,7 +29,7 @@ Config::Config() {
 }
 
 void Config::create() {
-	std::ofstream file("diary.config", std::ios::app);
+	std::ofstream file(PATH, std::ios::app);
 	check_file_for_error(!file);
 
 	file << "path=diary.md" << std::endl;
