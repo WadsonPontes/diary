@@ -39,6 +39,10 @@ void Diary::add(const std::string& content) {
 	this->messages.push_back(message);
 }
 
+void Diary::remove(int id) {
+	this->messages.erase(this->messages.begin() + id);	
+}
+
 std::vector<Message*> Diary::search(std::string what) {
 	std::vector<Message*> result;
 

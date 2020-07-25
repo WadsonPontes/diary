@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 #include <sstream>
 
 App::App() {
@@ -60,6 +61,19 @@ void App::add(const std::string message) {
 	this->diary.write();
 }
 
+void App::remove() {
+	std::string message;
+
+	std::getline(std::cin, message);
+
+	this->remove(message);
+}
+
+void App::remove(const std::string message) {
+	this->diary.remove(std::stoi(message));
+	this->diary.write();
+}
+
 void App::search() {
 	std::string message;
 
@@ -102,6 +116,25 @@ void App::list_messages(const std::string format) {
 	}
 }
 
+void App::list_with_id() {
+	this->list_with_id(this->config.default_format);
+}
+
+void App::list_with_id(const std::string format) {
+	if (this->diary.messages.empty()) {
+		std::cout << "No messages found..." << std::endl;
+	}
+	else {
+		size_t i = 0;
+
+		for (auto it : this->diary.messages) {
+			std::cout << "[" << i << "] " << it->to_string(format) << std::endl;
+			i++;
+		}
+	}
+	std::cout << std::endl;
+}
+
 int App::interactive() {
 	std::string action;
 
@@ -112,7 +145,8 @@ int App::interactive() {
 
 		std::cout << "[Enter 1] LIST" << std::endl;
 		std::cout << "[Enter 2] ADD" << std::endl;
-		std::cout << "[Enter 3] SEARCH" << std::endl;
+		std::cout << "[Enter 3] REMOVE" << std::endl;
+		std::cout << "[Enter 4] SEARCH" << std::endl;
 		std::cout << "[Enter 0] EXIT" << std::endl << std::endl;
 
 		std::cout << "[ACTION]";
@@ -137,6 +171,16 @@ int App::interactive() {
 			this->add();
 		}
 		else if (action == "3") {
+			limparTela();
+			this->list_with_id();
+
+			std::cout << "[ENTER THE ID]" << std::endl;
+
+			std::cout << std::endl << "[ID]";
+
+			this->remove();
+		}
+		else if (action == "4") {
 			limparTela();
 			std::cout << "[ENTER YOUR SEARCH]" << std::endl << std::endl;
 

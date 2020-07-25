@@ -6,7 +6,7 @@
 #include <sstream>
 #include <fstream>
 
-#define PATH "diary.config"
+#define PATH "/home/logica/Downloads/diary/diary.config"
 
 Config::Config() {
 	this->file.open(PATH);
