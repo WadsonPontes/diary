@@ -24,6 +24,12 @@ int App::run(int argc, char* argv[]) {
 		else
 			this->add(argv[2]);
 	}
+	if (action == "remove") {
+		if (argc == 2)
+			this->remove();
+		else
+			this->remove(argv[2]);
+	}
 	else if (action == "search") {
 		if (argc == 2)
 			this->search();
