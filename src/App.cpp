@@ -67,6 +67,36 @@ void App::add(const std::string message) {
 	this->diary.write();
 }
 
+void App::edit() {
+	std::string message;
+
+	std::getline(std::cin, message);
+
+	this->edit(message);
+}
+
+void App::edit(const std::string message) {
+	size_t id = std::stoi(message);
+	std::string format = this->config.default_format;
+	std::string new_message;
+
+	limparTela();
+
+	std::cout << "[OLD] ";
+	std::cout << this->diary.messages[id]->to_string(format) << std::endl << std::endl;
+
+	std::cout << "[WRITE THE NEW MESSAGE]" << std::endl << std::endl;
+	std::cout << "[MESSAGE]";
+
+	std::getline(std::cin, new_message);
+	this->edit(id, new_message);
+}
+
+void App::edit(size_t id, const std::string message) {
+	this->diary.edit(id, message);
+	this->diary.write();
+}
+
 void App::remove() {
 	std::string message;
 
@@ -94,6 +124,7 @@ void App::search(const std::string message) {
 
 void App::search(const std::string message, const std::string format) {
 	std::vector<Message*> result = this->diary.search(message);
+	size_t number_messages = 0;
 
 	limparTela();
 	std::cout << "[RESULT FOR][" << message << "]" << std::endl << std::endl;
@@ -103,8 +134,12 @@ void App::search(const std::string message, const std::string format) {
 	else {
 		for (auto it : result) {
 			std::cout << it->to_string(format) << std::endl;
+			number_messages++;
 		}
 	}
+
+	std::cout << "Number of messages: ";
+	std::cout << number_messages << std::endl;
 }
 
 void App::list_messages() {
@@ -112,14 +147,20 @@ void App::list_messages() {
 }
 
 void App::list_messages(const std::string format) {
+	size_t number_messages = 0;
+
 	if (this->diary.messages.empty()) {
 		std::cout << "No messages found..." << std::endl;
 	}
 	else {
 		for (auto it : this->diary.messages) {
 			std::cout << it->to_string(format) << std::endl;
+			number_messages++;
 		}
 	}
+
+	std::cout << "Number of messages: ";
+	std::cout << number_messages << std::endl;
 }
 
 void App::list_with_id() {
@@ -131,11 +172,11 @@ void App::list_with_id(const std::string format) {
 		std::cout << "No messages found..." << std::endl;
 	}
 	else {
-		size_t i = 0;
+		size_t id = 0;
 
 		for (auto it : this->diary.messages) {
-			std::cout << "[" << i << "] " << it->to_string(format) << std::endl;
-			i++;
+			std::cout << "[Enter " << id << "] " << it->to_string(format) << std::endl;
+			id++;
 		}
 	}
 	std::cout << std::endl;
@@ -151,16 +192,17 @@ int App::interactive() {
 
 		std::cout << "[Enter 1] LIST" << std::endl;
 		std::cout << "[Enter 2] ADD" << std::endl;
-		std::cout << "[Enter 3] REMOVE" << std::endl;
-		std::cout << "[Enter 4] SEARCH" << std::endl;
+		std::cout << "[Enter 3] EDIT" << std::endl;
+		std::cout << "[Enter 4] REMOVE" << std::endl;
+		std::cout << "[Enter 5] SEARCH" << std::endl;
 		std::cout << "[Enter 0] EXIT" << std::endl << std::endl;
 
 		std::cout << "[ACTION]";
 
 		getline(std::cin, action);
+		limparTela();
 
 		if (action == "1") {
-			limparTela();
 			std::cout << "[ALL MESSAGES]" << std::endl << std::endl;
 
 			this->list_messages();
@@ -169,7 +211,6 @@ int App::interactive() {
 			getchar();
 		}
 		else if (action == "2") {
-			limparTela();
 			std::cout << "[ENTER YOUR MESSAGE]" << std::endl << std::endl;
 
 			std::cout << std::endl << "[MESSAGE]";
@@ -177,7 +218,15 @@ int App::interactive() {
 			this->add();
 		}
 		else if (action == "3") {
-			limparTela();
+			this->list_with_id();
+
+			std::cout << "[ENTER THE ID]" << std::endl;
+
+			std::cout << std::endl << "[ID]";
+
+			this->edit();
+		}
+		else if (action == "4") {
 			this->list_with_id();
 
 			std::cout << "[ENTER THE ID]" << std::endl;
@@ -186,8 +235,7 @@ int App::interactive() {
 
 			this->remove();
 		}
-		else if (action == "4") {
-			limparTela();
+		else if (action == "5") {
 			std::cout << "[ENTER YOUR SEARCH]" << std::endl << std::endl;
 
 			std::cout << std::endl << "[SEARCH]";
@@ -198,7 +246,6 @@ int App::interactive() {
 			getchar();
 		}
 		else if (action != "0") {
-			limparTela();
 			std::cout << "[INVALID ACTION]" << std::endl << std::endl;
 
 			std::cout << std::endl << "[BACK]";

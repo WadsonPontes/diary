@@ -17,6 +17,9 @@ class App {
 		int run(int argc, char* argv[]);
 		void add();
 		void add(const std::string message);
+		void edit();
+		void edit(const std::string message);
+		void edit(size_t id, const std::string message);
 		void remove();
 		void remove(const std::string message);
 		void search();

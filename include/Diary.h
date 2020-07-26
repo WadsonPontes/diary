@@ -15,6 +15,7 @@ class Diary {
 
 		void load();
 		void add(const std::string& content);
+		void edit(int id, std::string message);
 		void remove(int id);
 		std::vector<Message*> search(std::string what);
 		void write();
