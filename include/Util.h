@@ -17,6 +17,10 @@ std::ifstream open_file_for_reading(std::string filename);
 std::ofstream open_file_for_writing(std::string filename);
 void check_file_for_error(bool error);
 void replace_all(std::string& str, const std::string& from, const std::string& to);
+int size(int number);
+std::string spaces(int n);
+void back_button();
+void invalid_action();
 int limparTela();
 
 #endif

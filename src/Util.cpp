@@ -1,6 +1,7 @@
 #include "Util.h"
 
 #include <iostream>
+#include <sstream>
 #include <ctime>
 
 std::string format_current_date(const std::string& format) {
@@ -57,6 +58,35 @@ void replace_all(std::string& str, const std::string& from, const std::string& t
 		str.replace(start_pos, from.length(), to);
 		start_pos = str.find(from);
 	}
+}
+
+int size(int number) {
+	int digits = 0;
+
+	while (number) {
+		number /= 10;
+		digits++;
+	}
+	return digits;
+}
+
+std::string spaces(int n) {
+	std::stringstream stream;
+
+	for (int i = 0; i < n; ++i) {
+		stream << " ";
+	}
+	return stream.str();
+}
+
+void back_button() {
+	std::cout << std::endl << "[BACK]";
+	getchar();
+}
+
+void invalid_action() {
+	std::cout << "[INVALID ACTION]" << std::endl;
+	back_button();
 }
 
 int limparTela() {

@@ -18,10 +18,13 @@ class App {
 		void add();
 		void add(const std::string message);
 		void edit();
-		void edit(const std::string message);
-		void edit(size_t id, const std::string message);
+		void edit(const std::string format);
+		void edit(size_t id);
+		void edit(size_t id, const std::string format);
+		void edit(size_t id, const std::string message, const std::string format);
 		void remove();
-		void remove(const std::string message);
+		void remove(const std::string format);
+		void remove(size_t id, const std::string format);
 		void search();
 		void search(const std::string message);
 		void search(const std::string message, const std::string format);
